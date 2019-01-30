@@ -109,13 +109,17 @@ class RayTracer {
     }
 
     Frame render(ArrayList<Sphere> spheres, ArrayList<Light> lights) {
+        return render(spheres, lights, false);
+    }
+
+    Frame render(ArrayList<Sphere> spheres, ArrayList<Light> lights, boolean progress) {
         int width = 1024;
         int height = 768;
         float fov = (float) (Math.PI / 3.);
         Vec3f[] framebuffer = new Vec3f[width * height];
 
         for (int j = 0; j < height; j++) { // actual rendering loop
-            if ((j % 100) == 0) {
+            if (progress && (j % 100) == 0) {
                 System.out.println("Rendering line " + j + "...");
             }
             for (int i = 0; i < width; i++) {
