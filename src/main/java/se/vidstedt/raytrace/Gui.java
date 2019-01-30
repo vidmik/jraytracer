@@ -13,20 +13,21 @@ import javafx.stage.Stage;
 public class Gui extends Application {
     @Override
     public void start(Stage primaryStage) {
-        byte[] data = new Main().doIt();
+        Frame frame = new Main().doIt();
 
         VBox box = new VBox();
         Scene scene = new Scene(box);
 
-        WritableImage image = new WritableImage(1024, 768);
+        WritableImage image = new WritableImage(frame.getWidth(), frame.getHeight());
         PixelWriter writer = image.getPixelWriter();
-        for (int height = 0; height < 768; height++) {
-            for (int width = 0; width < 1024; width++) {
-                int startIndex = (height * 1024 + width) * 3;
+        int index = 0;
+        byte[] data = frame.getData();
+        for (int height = 0; height < frame.getHeight(); height++) {
+            for (int width = 0; width < frame.getWidth(); width++) {
                 Color color = Color.rgb(
-                        Byte.toUnsignedInt(data[startIndex]),
-                        Byte.toUnsignedInt(data[startIndex + 1]),
-                        Byte.toUnsignedInt(data[startIndex + 2]));
+                        Byte.toUnsignedInt(data[index++]),
+                        Byte.toUnsignedInt(data[index++]),
+                        Byte.toUnsignedInt(data[index++]));
                 writer.setColor(width, height, color);
             }
         }

@@ -108,7 +108,7 @@ class RayTracer {
                        .add(reflectColor.mul(material.getAlbedo().values()[2]).add(refractColor.mul(material.getAlbedo().values()[3])));
     }
 
-    byte[] render(ArrayList<Sphere> spheres, ArrayList<Light> lights) {
+    Frame render(ArrayList<Sphere> spheres, ArrayList<Light> lights) {
         int width = 1024;
         int height = 768;
         float fov = (float) (Math.PI / 3.);
@@ -140,6 +140,6 @@ class RayTracer {
             }
         }
 
-        return data;
+        return new Frame(width, height, data);
     }
 }
