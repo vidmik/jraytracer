@@ -3,6 +3,16 @@ package se.vidstedt.raytrace;
 import java.util.ArrayList;
 
 class RayTracer {
+    private final int width;
+    private final int height;
+    private final ImageMap background;
+
+    public RayTracer(int width, int height, ImageMap background) {
+        this.width = width;
+        this.height = height;
+        this.background = background;
+    }
+
     private static Vec3f reflect(Vec3f I, Vec3f N) {
         // I - N*2.f*(I*N)
         return I.sub(N.mul(2.f).mul(I.dotProduct(N)));
@@ -69,8 +79,12 @@ class RayTracer {
         Vec3f[] pointBox = new Vec3f[1], NBox = new Vec3f[1];
         Material[] materialBox = {new Material()};
 
-        if (depth > 4 || !sceneIntersect(orig, dir, spheres, pointBox, NBox, materialBox)) {
-            return new Vec3f(0.2f, 0.7f, 0.8f); // background color
+        if (depth > 4) {
+            return new Vec3f(0.2f, 0.7f, 0.8f); // any color
+        } else if (!sceneIntersect(orig, dir, spheres, pointBox, NBox, materialBox)) {
+            int x = (int)((dir.values()[0]/2 + 0.5) * background.getWidth());
+            int y = (int)((-dir.values()[1]/2 + 0.5) * background.getHeight());
+            return background.getPixel(x, y);
         }
 
         Vec3f point = pointBox[0];
@@ -102,7 +116,7 @@ class RayTracer {
             diffuseLightIntensity += light.getIntensity() * Math.max(0.f, lightDir.dotProduct(N));
             specularLightIntensity += Math.pow(Math.max(0.f, reflect(lightDir.neg(), N).neg().dotProduct(dir)), material.getSpecularExponent()) * light.getIntensity();
         }
-        // CMH: This is almost certainly incorrect...
+
         return material.getDiffuseColor().mul(diffuseLightIntensity).mul(material.getAlbedo().values()[0])
                        .add(new Vec3f(1.f, 1.f, 1.f).mul(specularLightIntensity).mul(material.getAlbedo().values()[1]))
                        .add(reflectColor.mul(material.getAlbedo().values()[2]).add(refractColor.mul(material.getAlbedo().values()[3])));
@@ -113,8 +127,6 @@ class RayTracer {
     }
 
     Frame render(ArrayList<Sphere> spheres, ArrayList<Light> lights, boolean progress) {
-        int width = 1024;
-        int height = 768;
         float fov = (float) (Math.PI / 3.);
         Vec3f[] framebuffer = new Vec3f[width * height];
 
@@ -126,8 +138,7 @@ class RayTracer {
                 float dirX = (i + 0.5f) - width / 2.f;
                 float dirY = -(j + 0.5f) + height / 2.f;    // this flips the image at the same time
                 float dirZ = -height / (2.f * (float) Math.tan(fov / 2.f));
-                Vec3f c = castRay(new Vec3f(0, 0, 0), new Vec3f(dirX, dirY, dirZ).normalize(), spheres, lights);
-                framebuffer[i + j * width] = c;
+                framebuffer[i + j * width] = castRay(new Vec3f(0, 0, 0), new Vec3f(dirX, dirY, dirZ).normalize(), spheres, lights);
             }
         }
 

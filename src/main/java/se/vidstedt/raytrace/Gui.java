@@ -3,6 +3,7 @@ package se.vidstedt.raytrace;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
@@ -11,12 +12,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class Gui extends Application {
-    @Override
-    public void start(Stage primaryStage) {
+    private Image renderImage() {
         Frame frame = new Main().doIt();
-
-        VBox box = new VBox();
-        Scene scene = new Scene(box);
 
         WritableImage image = new WritableImage(frame.getWidth(), frame.getHeight());
         PixelWriter writer = image.getPixelWriter();
@@ -31,6 +28,15 @@ public class Gui extends Application {
                 writer.setColor(width, height, color);
             }
         }
+        return image;
+    }
+
+    @Override
+    public void start(Stage primaryStage) {
+        VBox box = new VBox();
+        Scene scene = new Scene(box);
+
+        Image image = renderImage();
         ImageView iv = new ImageView(image);
         box.getChildren().add(iv);
 
