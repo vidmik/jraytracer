@@ -3,7 +3,6 @@ package se.vidstedt.raytrace;
 import java.util.ArrayList;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
-import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
 class Main {
@@ -19,18 +18,10 @@ class Main {
     private ImageMap getBackground() {
         PixelReader reader;
         int width, height;
-        if (false) {
-            width = WIDTH;
-            height = HEIGHT;
-            Image image = new Image(this.getClass().getResourceAsStream(BACKGROUND_IMAGE), 0, HEIGHT, true, true);
-            WritableImage wi = new WritableImage(image.getPixelReader(), WIDTH, HEIGHT);
-            reader = wi.getPixelReader();
-        } else {
-            Image image = new Image(this.getClass().getResourceAsStream(BACKGROUND_IMAGE));
-            width = (int)image.getWidth();
-            height = (int)image.getHeight();
-            reader = image.getPixelReader();
-        }
+        Image image = new Image(this.getClass().getResourceAsStream(BACKGROUND_IMAGE));
+        width = (int)image.getWidth();
+        height = (int)image.getHeight();
+        reader = image.getPixelReader();
         Vec3f[] pixels = new Vec3f[width * height];
 
         int index = 0;
@@ -52,17 +43,17 @@ class Main {
         Material redRubber = new Material(1.0f, new Vec4f(0.9f, 0.1f, 0.0f, 0.0f), new Vec3f(0.3f, 0.1f, 0.1f), 10.f);
         Material mirror = new Material(1.0f, new Vec4f(0.0f, 10.0f, 0.8f, 0.0f), new Vec3f(1.0f, 1.0f, 1.0f), 1425.f);
 
-        ArrayList<Sphere> spheres = new ArrayList<>();
-        spheres.add(new Sphere(new Vec3f(-3f, 0f, -16f), 2, ivory));
-        spheres.add(new Sphere(new Vec3f(-1.0f, -1.5f, -12f), 2, glass));
-        spheres.add(new Sphere(new Vec3f(1.5f, -0.5f, -18f), 3, redRubber));
-        spheres.add(new Sphere(new Vec3f(7f, 5f, -18f), 4, mirror));
+        ArrayList<Shape> shapes = new ArrayList<>();
+        shapes.add(new Sphere(new Vec3f(-3f, 0f, -16f), 2, ivory));
+        shapes.add(new Sphere(new Vec3f(-1.0f, -1.5f, -12f), 2, glass));
+        shapes.add(new Sphere(new Vec3f(1.5f, -0.5f, -18f), 3, redRubber));
+        shapes.add(new Sphere(new Vec3f(7f, 5f, -18f), 4, mirror));
 
         ArrayList<Light> lights = new ArrayList<>();
         lights.add(new Light(new Vec3f(-20f, 20f, 20f), 1.5f));
         lights.add(new Light(new Vec3f(30f, 50f, -25f), 1.8f));
         lights.add(new Light(new Vec3f(30f, 20f, 30f), 1.7f));
 
-        return new RayTracer(WIDTH, HEIGHT, background).render(spheres, lights);
+        return new RayTracer(WIDTH, HEIGHT, background).render(shapes, lights);
     }
 }

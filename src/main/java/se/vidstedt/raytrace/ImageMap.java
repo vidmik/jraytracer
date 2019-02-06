@@ -1,6 +1,6 @@
 package se.vidstedt.raytrace;
 
-public class ImageMap {
+class ImageMap {
     private final int width;
     private final int height;
     private final Vec3f[] pixels;
