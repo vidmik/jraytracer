@@ -57,6 +57,33 @@ class Main {
             sceneBuilder.add(new Light(new Vec3f(30f, 20f, 30f), 1.7f));
         }
 
+        // Trying out Rectangle and Cube
+        if (true) {
+            if (true) {
+                sceneBuilder.add(new Rectangle(new Vec3f(1.5f, -0.5f, -7f), new Vec3f(0.5f, 0, 0), new Vec3f(0, 1f, 0), redRubber));
+                if (false) {
+                    sceneBuilder.add(new Sphere(new Vec3f(1.5f, -0.5f, -10f), 0.1f, ivory));
+                    sceneBuilder.add(new Sphere(new Vec3f(2.5f, 1.5f, -10f), 0.2f, redRubber));
+                }
+                if (true) {
+                    sceneBuilder.add(new Light(new Vec3f(1f, 0f, -5f), 2.0f));
+                }
+            }
+
+            if (false) {
+                sceneBuilder.add(
+                        new Cube(
+                                new Vec3f(-0.5f, -0.5f, -5f),
+                                new Vec3f(2f, 0, 0),
+                                new Vec3f(0, 3f, 0),
+                                new Vec3f(0, 0f, -1f),
+                                redRubber));
+                if (true) {
+                    sceneBuilder.add(new Light(new Vec3f(1f, 0f, -2f), 2.0f));
+                }
+            }
+        }
+
         return new RayTracer(WIDTH, HEIGHT, background).render(sceneBuilder.build());
     }
 }
