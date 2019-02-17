@@ -1,6 +1,5 @@
 package se.vidstedt.raytrace;
 
-import java.util.ArrayList;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.paint.Color;
@@ -19,8 +18,8 @@ class Main {
         PixelReader reader;
         int width, height;
         Image image = new Image(this.getClass().getResourceAsStream(BACKGROUND_IMAGE));
-        width = (int)image.getWidth();
-        height = (int)image.getHeight();
+        width = (int) image.getWidth();
+        height = (int) image.getHeight();
         reader = image.getPixelReader();
         Vec3f[] pixels = new Vec3f[width * height];
 
@@ -28,7 +27,7 @@ class Main {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 Color c = reader.getColor(x, y);
-                pixels[index++] = new Vec3f((float)c.getRed(), (float)c.getGreen(), (float)c.getBlue());
+                pixels[index++] = new Vec3f((float) c.getRed(), (float) c.getGreen(), (float) c.getBlue());
             }
         }
 
@@ -43,17 +42,21 @@ class Main {
         Material redRubber = new Material(1.0f, new Vec4f(0.9f, 0.1f, 0.0f, 0.0f), new Vec3f(0.3f, 0.1f, 0.1f), 10.f);
         Material mirror = new Material(1.0f, new Vec4f(0.0f, 10.0f, 0.8f, 0.0f), new Vec3f(1.0f, 1.0f, 1.0f), 1425.f);
 
-        ArrayList<Shape> shapes = new ArrayList<>();
-        shapes.add(new Sphere(new Vec3f(-3f, 0f, -16f), 2, ivory));
-        shapes.add(new Sphere(new Vec3f(-1.0f, -1.5f, -12f), 2, glass));
-        shapes.add(new Sphere(new Vec3f(1.5f, -0.5f, -18f), 3, redRubber));
-        shapes.add(new Sphere(new Vec3f(7f, 5f, -18f), 4, mirror));
+        SceneBuilder sceneBuilder = new SceneBuilder();
 
-        ArrayList<Light> lights = new ArrayList<>();
-        lights.add(new Light(new Vec3f(-20f, 20f, 20f), 1.5f));
-        lights.add(new Light(new Vec3f(30f, 50f, -25f), 1.8f));
-        lights.add(new Light(new Vec3f(30f, 20f, 30f), 1.7f));
+        if (true) {
+            sceneBuilder.add(new Sphere(new Vec3f(-3f, 0f, -16f), 2, ivory));
+            sceneBuilder.add(new Sphere(new Vec3f(-1.0f, -1.5f, -12f), 2, glass));
+            sceneBuilder.add(new Sphere(new Vec3f(1.5f, -0.5f, -18f), 3, redRubber));
+            sceneBuilder.add(new Sphere(new Vec3f(7f, 5f, -18f), 4, mirror));
+        }
 
-        return new RayTracer(WIDTH, HEIGHT, background).render(shapes, lights);
+        if (true) {
+            sceneBuilder.add(new Light(new Vec3f(-20f, 20f, 20f), 1.5f));
+            sceneBuilder.add(new Light(new Vec3f(30f, 50f, -25f), 1.8f));
+            sceneBuilder.add(new Light(new Vec3f(30f, 20f, 30f), 1.7f));
+        }
+
+        return new RayTracer(WIDTH, HEIGHT, background).render(sceneBuilder.build());
     }
 }

@@ -58,6 +58,14 @@ public class Vec3f {
         return ret;
     }
 
+    public Vec3f cross(Vec3f other) {
+        return new Vec3f(
+                values[1] * other.values[2] - values[2] * other.values[1],
+                values[2] * other.values[0] - values[0] * other.values[2],
+                values[0] * other.values[1] - values[1] * other.values[0]
+        );
+    }
+
     float norm() {
         return (float) Math.sqrt(values[0] * values[0] + values[1] * values[1] + values[2] * values[2]);
     }
@@ -67,7 +75,6 @@ public class Vec3f {
     }
 
     private Vec3f normalize(float l) {
-        // CMH: Original code mutates the instance here...
         return mul(l / norm());
     }
 }

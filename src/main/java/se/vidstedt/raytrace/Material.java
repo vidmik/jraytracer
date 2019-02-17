@@ -2,7 +2,7 @@ package se.vidstedt.raytrace;
 
 public class Material {
     private final float refractiveIndex;
-    private Vec3f diffuseColor;
+    private final Vec3f diffuseColor;
     private final Vec4f albedo;
     private final float specularExponent;
 
@@ -25,8 +25,8 @@ public class Material {
         return diffuseColor;
     }
 
-    public void setDiffuseColor(Vec3f diffuseColor) {
-        this.diffuseColor = diffuseColor;
+    public Material withDiffuseColor(Vec3f diffuseColor) {
+        return new Material(refractiveIndex, albedo, diffuseColor, specularExponent);
     }
 
     public Vec4f getAlbedo() {
