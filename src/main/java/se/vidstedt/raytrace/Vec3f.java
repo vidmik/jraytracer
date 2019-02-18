@@ -18,9 +18,14 @@ public class Vec3f {
         this(0, 0, 0);
     }
 
-    public float[] values() {
-        return values;
+    public float getValue(int index) {
+        return values[index];
     }
+
+    public float x() { return values[0]; }
+    public float y() { return values[1]; }
+    public float z() { return values[2]; }
+
 
     public Vec3f add(Vec3f other) {
         float[] ret = new float[values.length];

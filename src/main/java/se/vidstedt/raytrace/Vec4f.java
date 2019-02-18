@@ -14,7 +14,7 @@ public class Vec4f {
         this.values = values;
     }
 
-    public float[] values() {
-        return values;
+    public float getValue(int index) {
+        return values[index];
     }
 }

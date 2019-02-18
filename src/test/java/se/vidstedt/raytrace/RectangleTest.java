@@ -17,42 +17,42 @@ public class RectangleTest {
             Optional<Intersection> intersection = r.rayIntersect(new Vec3f(1, 1, 0), new Vec3f(0, 0, -1).normalize());
             assertTrue(intersection.isPresent());
 
-            assertEquals(1, intersection.get().getPoint().values()[0], EPSILON);
-            assertEquals(1, intersection.get().getPoint().values()[1], EPSILON);
-            assertEquals(-1, intersection.get().getPoint().values()[2], EPSILON);
+            assertEquals(1, intersection.get().getPoint().x(), EPSILON);
+            assertEquals(1, intersection.get().getPoint().y(), EPSILON);
+            assertEquals(-1, intersection.get().getPoint().z(), EPSILON);
 
-            assertEquals(0, intersection.get().getN().values()[0], EPSILON);
-            assertEquals(0, intersection.get().getN().values()[1], EPSILON);
-            assertEquals(1, intersection.get().getN().values()[2], EPSILON);
+            assertEquals(0, intersection.get().getN().x(), EPSILON);
+            assertEquals(0, intersection.get().getN().y(), EPSILON);
+            assertEquals(1, intersection.get().getN().z(), EPSILON);
         }
 
         {
             Optional<Intersection> intersection = r.rayIntersect(new Vec3f(1, 1, -2), new Vec3f(0, 0, 1).normalize());
             assertTrue(intersection.isPresent());
 
-            assertEquals(1, intersection.get().getPoint().values()[0], EPSILON);
-            assertEquals(1, intersection.get().getPoint().values()[1], EPSILON);
-            assertEquals(-1, intersection.get().getPoint().values()[2], EPSILON);
+            assertEquals(1, intersection.get().getPoint().x(), EPSILON);
+            assertEquals(1, intersection.get().getPoint().y(), EPSILON);
+            assertEquals(-1, intersection.get().getPoint().z(), EPSILON);
 
-            assertEquals(0, intersection.get().getN().values()[0], EPSILON);
-            assertEquals(0, intersection.get().getN().values()[1], EPSILON);
-            assertEquals(-1, intersection.get().getN().values()[2], EPSILON);
+            assertEquals(0, intersection.get().getN().x(), EPSILON);
+            assertEquals(0, intersection.get().getN().y(), EPSILON);
+            assertEquals(-1, intersection.get().getN().z(), EPSILON);
         }
 
         {
             Optional<Intersection> intersection = r.rayIntersect(new Vec3f(0, 0, 0), new Vec3f(1, 1, -1).normalize());
             assertTrue(intersection.isPresent());
-            assertEquals(1, intersection.get().getPoint().values()[0], EPSILON);
-            assertEquals(1, intersection.get().getPoint().values()[1], EPSILON);
-            assertEquals(-1, intersection.get().getPoint().values()[2], EPSILON);
+            assertEquals(1, intersection.get().getPoint().x(), EPSILON);
+            assertEquals(1, intersection.get().getPoint().y(), EPSILON);
+            assertEquals(-1, intersection.get().getPoint().z(), EPSILON);
         }
 
         {
             Optional<Intersection> intersection = r.rayIntersect(new Vec3f(0, 0, -2), new Vec3f(1, 1, 1).normalize());
             assertTrue(intersection.isPresent());
-            assertEquals(1, intersection.get().getPoint().values()[0], EPSILON);
-            assertEquals(1, intersection.get().getPoint().values()[1], EPSILON);
-            assertEquals(-1, intersection.get().getPoint().values()[2], EPSILON);
+            assertEquals(1, intersection.get().getPoint().x(), EPSILON);
+            assertEquals(1, intersection.get().getPoint().y(), EPSILON);
+            assertEquals(-1, intersection.get().getPoint().z(), EPSILON);
         }
     }
 

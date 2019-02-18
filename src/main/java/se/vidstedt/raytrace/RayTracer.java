@@ -60,16 +60,16 @@ class RayTracer {
         }
 
         if (CHECKERBOARD) {
-            if (Math.abs(dir.values()[1]) > 1e-3) {
+            if (Math.abs(dir.y()) > 1e-3) {
                 // the checkerboard plane has equation y = -4
-                float checkerboardDist = -(orig.values()[1] + 4) / dir.values()[1];
+                float checkerboardDist = -(orig.y() + 4) / dir.y();
                 Vec3f pt = orig.add(dir.mul(checkerboardDist));
-                if (checkerboardDist > 0 && Math.abs(pt.values()[0]) < 10 && pt.values()[2] < -10 && pt.values()[2] > -30) {
+                if (checkerboardDist > 0 && Math.abs(pt.x()) < 10 && pt.z() < -10 && pt.z() > -30) {
                     if (intersection.isEmpty() || checkerboardDist < intersection.get().getDistance()) {
                         Vec3f hit = pt;
                         Vec3f N = new Vec3f(0, 1, 0);
 
-                        int s = (int) (.5f * hit.values()[0] + 1000) + (int) (.5 * hit.values()[2]);
+                        int s = (int) (.5f * hit.x() + 1000) + (int) (.5 * hit.z());
                         Vec3f color;
                         if ((s & 1) != 0) {
                             color = new Vec3f(.3f, .3f, .3f);
@@ -102,8 +102,8 @@ class RayTracer {
         }
         Optional<Intersection> intersection = sceneIntersect(orig, dir, scene.getShapes());
         if (intersection.isEmpty()) {
-            int x = (int) ((dir.values()[0] / 2 + 0.5) * background.getWidth());
-            int y = (int) ((-dir.values()[1] / 2 + 0.5) * background.getHeight());
+            int x = (int) ((dir.x() / 2 + 0.5) * background.getWidth());
+            int y = (int) ((-dir.y() / 2 + 0.5) * background.getHeight());
             return background.getPixel(x, y);
         }
 
@@ -147,9 +147,9 @@ class RayTracer {
             specularLightIntensity += Math.pow(Math.max(0.f, reflect(lightDir.neg(), N).neg().dotProduct(dir)), material.getSpecularExponent()) * light.getIntensity();
         }
 
-        return material.getDiffuseColor().mul(diffuseLightIntensity).mul(material.getAlbedo().values()[0])
-                       .add(new Vec3f(1.f, 1.f, 1.f).mul(specularLightIntensity).mul(material.getAlbedo().values()[1]))
-                       .add(reflectColor.mul(material.getAlbedo().values()[2]).add(refractColor.mul(material.getAlbedo().values()[3])));
+        return material.getDiffuseColor().mul(diffuseLightIntensity).mul(material.getAlbedo().getValue(0))
+                       .add(new Vec3f(1.f, 1.f, 1.f).mul(specularLightIntensity).mul(material.getAlbedo().getValue(1)))
+                       .add(reflectColor.mul(material.getAlbedo().getValue(2)).add(refractColor.mul(material.getAlbedo().getValue(3))));
     }
 
     private Stream<Runnable> rays(Vec3f[] frameBuffer, Scene scene) {
@@ -179,12 +179,12 @@ class RayTracer {
         byte[] data = new byte[width * height * 3];
         for (int i = 0; i < height * width; i++) {
             Vec3f c = frameBuffer[i];
-            float max = Math.max(c.values()[0], Math.max(c.values()[1], c.values()[2]));
+            float max = Math.max(c.x(), Math.max(c.y(), c.z()));
             if (max > 1) {
                 c = c.mul(1.f / max);
             }
             for (int j = 0; j < 3; j++) {
-                byte b = (byte) (255 * Math.max(0.f, Math.min(1.f, c.values()[j])));
+                byte b = (byte) (255 * Math.max(0.f, Math.min(1.f, c.getValue(j))));
                 data[i * 3 + j] = b;
             }
         }
