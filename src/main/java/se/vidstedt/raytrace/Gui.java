@@ -55,9 +55,9 @@ public class Gui extends Application {
 
                 .add(new Cube(
                         new Vec3f(3f, 0f, -10f),
-                        new Vec3f(1f, 0f, 0f),
-                        new Vec3f(0f, 1f, 0f),
-                        new Vec3f(0f, 0f, -1f),
+                        new Vec3f(3f, 0f, 0f),
+                        new Vec3f(0f, -3f, 0f),
+                        new Vec3f(0f, 0f, -3f),
                         redRubber))
 
                 //.add(new Light(new Vec3f(1f, 0f, -2f), 2.0f));
