@@ -50,6 +50,10 @@ public class Rectangle implements Shape {
         //
         // 0 <= length(Q1) <= length(S1)   AND   0 <= length(Q2) <= length(S2)
 
+        if (Math.abs(dir.norm() - 1) > .0001f) {
+            throw new IllegalArgumentException();
+        }
+
         Vec3f R0 = orig;
         Vec3f D = dir;
         Vec3f P0 = corner;
@@ -59,13 +63,10 @@ public class Rectangle implements Shape {
         // CMH: The direction of the normal matters...
         Vec3f N = S1.cross(S2).normalize();
 
-        // If ray is in same direction as normal it won't hit the plane
-        /*
+        // Make sure normal is in reverse direction of ray
         if (D.dotProduct(N) > 0) {
             N = N.mul(-1);
-            //return Optional.empty();
         }
-        */
 
         float a = P0.sub(R0).dotProduct(N) / D.dotProduct(N);
         if (a < 0) {

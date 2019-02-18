@@ -74,7 +74,7 @@ class RayTracer {
                         if ((s & 1) != 0) {
                             color = new Vec3f(.3f, .3f, .3f);
                         } else {
-                            color = new Vec3f(.3f, .2f, .1f);
+                            color = new Vec3f(.1f, .2f, .3f);
                         }
                         Material material = intersection.isPresent() ? intersection.get().getMaterial() : new Material();
                         material = material.withDiffuseColor(color);
@@ -152,11 +152,6 @@ class RayTracer {
                        .add(reflectColor.mul(material.getAlbedo().values()[2]).add(refractColor.mul(material.getAlbedo().values()[3])));
     }
 
-    Frame render(Scene scene) {
-        return render(scene, false);
-    }
-
-
     private Stream<Runnable> rays(Vec3f[] frameBuffer, Scene scene) {
         ArrayList<Runnable> rays = new ArrayList<>();
 
@@ -175,7 +170,7 @@ class RayTracer {
         return rays.stream();
     }
 
-    private Frame render(Scene scene, boolean progress) {
+    Frame render(Scene scene) {
         Vec3f[] frameBuffer = new Vec3f[width * height];
 
         Stream<Runnable> rays = rays(frameBuffer, scene);
