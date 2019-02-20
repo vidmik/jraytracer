@@ -95,6 +95,25 @@ class RayTracer {
         return castRay(orig, dir, scene, 0);
     }
 
+    private Vec3f getEnvironment(Vec3f dir) {
+        int x, y;
+        switch (background.getType()) {
+            case RECTANGULAR:
+                x = (int) ((dir.x() / 2 + 0.5) * background.getWidth());
+                y = (int) ((-dir.y() / 2 + 0.5) * background.getHeight());
+                break;
+            case SPHERICAL:
+                x = (int) ((Math.atan2(dir.z(), dir.x()) / (2 * Math.PI) + 0.5) * background.getWidth());
+                y = (int) (Math.acos(dir.y()) / Math.PI * background.getHeight());
+                break;
+            default:
+                throw new UnsupportedOperationException();
+        }
+
+        return background.getPixel(x, y);
+
+    }
+
     private Vec3f castRay(Vec3f orig, Vec3f dir, Scene scene, int depth) {
         if (depth > 4) {
             // any color
@@ -102,9 +121,7 @@ class RayTracer {
         }
         Optional<Intersection> intersection = sceneIntersect(orig, dir, scene.getShapes());
         if (intersection.isEmpty()) {
-            int x = (int) ((dir.x() / 2 + 0.5) * background.getWidth());
-            int y = (int) ((-dir.y() / 2 + 0.5) * background.getHeight());
-            return background.getPixel(x, y);
+            return getEnvironment(dir);
         }
 
         Vec3f point = intersection.get().getPoint();

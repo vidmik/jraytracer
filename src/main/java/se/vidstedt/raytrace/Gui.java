@@ -34,7 +34,7 @@ public class Gui extends Application {
             }
         }
 
-        return new ImageMap(width, height, pixels);
+        return new ImageMap(ImageMap.ImageMapType.SPHERICAL, width, height, pixels);
     }
 
     Scene createScene() {
