@@ -1,7 +1,10 @@
 package se.vidstedt.raytrace;
 
 public class Albedo {
-    private float diffuse, specular, reflect, refract;
+    private final float diffuse;
+    private final float specular;
+    private final float reflect;
+    private final float refract;
 
     public Albedo(float diffuse, float specular, float reflect, float refract) {
         this.diffuse = diffuse;

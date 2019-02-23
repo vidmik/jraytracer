@@ -1,6 +1,6 @@
 package se.vidstedt.raytrace;
 
-public class Frame {
+class Frame {
     private final int width;
     private final int height;
     private final byte[] data;

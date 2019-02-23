@@ -1,7 +1,9 @@
 package se.vidstedt.raytrace;
 
 public class Vec3f {
-    private float x, y, z;
+    private final float x;
+    private final float y;
+    private final float z;
 
     public Vec3f(float x, float y, float z) {
         this.x = x;

@@ -1,7 +1,7 @@
 package se.vidstedt.raytrace;
 
 class ImageMap {
-    enum ImageMapType { RECTANGULAR, SPHERICAL };
+    enum ImageMapType { RECTANGULAR, SPHERICAL }
     private final ImageMapType type;
     private final int width;
     private final int height;
