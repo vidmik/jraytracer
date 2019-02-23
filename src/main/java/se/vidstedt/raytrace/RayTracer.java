@@ -200,10 +200,10 @@ class RayTracer {
             if (max > 1) {
                 c = c.mul(1.f / max);
             }
-            for (int j = 0; j < 3; j++) {
-                byte b = (byte) (255 * Math.max(0.f, Math.min(1.f, c.getValue(j))));
-                data[i * 3 + j] = b;
-            }
+
+            data[i * 3] = (byte) (255 * Math.max(0.f, Math.min(1.f, c.x())));
+            data[i * 3 + 1] = (byte) (255 * Math.max(0.f, Math.min(1.f, c.y())));
+            data[i * 3 + 2] = (byte) (255 * Math.max(0.f, Math.min(1.f, c.z())));
         }
 
         return new Frame(width, height, data);

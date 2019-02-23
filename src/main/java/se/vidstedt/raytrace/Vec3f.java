@@ -1,46 +1,29 @@
 package se.vidstedt.raytrace;
 
 public class Vec3f {
-    private float[] values;
+    private float x, y, z;
 
-    public Vec3f(float f1, float f2, float f3) {
-        this(new float[]{f1, f2, f3});
-    }
-
-    private Vec3f(float[] values) {
-        if (values.length != 3) {
-            throw new IllegalArgumentException();
-        }
-        this.values = values;
+    public Vec3f(float x, float y, float z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
     public Vec3f() {
         this(0, 0, 0);
     }
 
-    public float getValue(int index) {
-        return values[index];
-    }
-
-    public float x() { return values[0]; }
-    public float y() { return values[1]; }
-    public float z() { return values[2]; }
+    public float x() { return x; }
+    public float y() { return y; }
+    public float z() { return z; }
 
 
     public Vec3f add(Vec3f other) {
-        float[] ret = new float[values.length];
-        for (int i = 0; i < values.length; i++) {
-            ret[i] = values[i] + other.values[i];
-        }
-        return new Vec3f(ret);
+        return new Vec3f(x + other.x, y + other.y, z + other.z);
     }
 
     public Vec3f sub(Vec3f other) {
-        float[] ret = new float[values.length];
-        for (int i = 0; i < values.length; i++) {
-            ret[i] = values[i] - other.values[i];
-        }
-        return new Vec3f(ret);
+        return new Vec3f(x - other.x, y - other.y, z - other.z);
     }
 
     public Vec3f neg() {
@@ -48,31 +31,22 @@ public class Vec3f {
     }
 
     public Vec3f mul(float f) {
-        float[] ret = new float[values.length];
-        for (int i = 0; i < values.length; i++) {
-            ret[i] = values[i] * f;
-        }
-        return new Vec3f(ret);
+        return new Vec3f(x * f, y * f, z * f);
     }
 
     public float dotProduct(Vec3f other) {
-        float ret = 0;
-        for (int i = 0; i < values.length; i++) {
-            ret += values[i] * other.values[i];
-        }
-        return ret;
+        return x * other.x + y * other.y + z * other.z;
     }
 
     public Vec3f cross(Vec3f other) {
         return new Vec3f(
-                values[1] * other.values[2] - values[2] * other.values[1],
-                values[2] * other.values[0] - values[0] * other.values[2],
-                values[0] * other.values[1] - values[1] * other.values[0]
-        );
+                y * other.z - z * other.y,
+                z * other.x - x * other.z,
+                x * other.y - y * other.x);
     }
 
     float norm() {
-        return (float) Math.sqrt(values[0] * values[0] + values[1] * values[1] + values[2] * values[2]);
+        return (float) Math.sqrt(x * x + y * y + z * z);
     }
 
     Vec3f normalize() {
