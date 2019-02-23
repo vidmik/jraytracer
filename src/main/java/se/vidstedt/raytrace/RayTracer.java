@@ -164,9 +164,9 @@ class RayTracer {
             specularLightIntensity += Math.pow(Math.max(0.f, reflect(lightDir.neg(), N).neg().dotProduct(dir)), material.getSpecularExponent()) * light.getIntensity();
         }
 
-        return material.getDiffuseColor().mul(diffuseLightIntensity).mul(material.getAlbedo().getValue(0))
-                       .add(new Vec3f(1.f, 1.f, 1.f).mul(specularLightIntensity).mul(material.getAlbedo().getValue(1)))
-                       .add(reflectColor.mul(material.getAlbedo().getValue(2)).add(refractColor.mul(material.getAlbedo().getValue(3))));
+        return material.getDiffuseColor().mul(diffuseLightIntensity).mul(material.getAlbedo().getDiffuse())
+                       .add(new Vec3f(1.f, 1.f, 1.f).mul(specularLightIntensity).mul(material.getAlbedo().getSpecular()))
+                       .add(reflectColor.mul(material.getAlbedo().getReflect()).add(refractColor.mul(material.getAlbedo().getRefract())));
     }
 
     private Stream<Runnable> rays(Vec3f[] frameBuffer, Scene scene) {
