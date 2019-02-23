@@ -42,9 +42,9 @@ public class Rectangle implements Shape {
         // Q1: Projection of P0P along S1
         // Q2: Projection of P0P along S2
         //
-        // Proj w onto v:
+        // Projection w onto v:
         //
-        // proj(v) W = (v dot w) * v / v dot v;
+        // projection(v) W = (v dot w) * v / v dot v;
         //
         // Point within rectangle bounds iff:
         //
@@ -63,18 +63,12 @@ public class Rectangle implements Shape {
         // CMH: The direction of the normal matters...
         Vec3f N = S1.cross(S2).normalize();
 
-        // Make sure normal is in reverse direction of ray
-        if (D.dotProduct(N) > 0) {
-            N = N.mul(-1);
-        }
-
         float a = P0.sub(R0).dotProduct(N) / D.dotProduct(N);
         if (a < 0) {
             return Optional.empty();
         }
 
         Vec3f P = R0.add(D.mul(a));
-
         Vec3f P0P = P.sub(P0);
 
         // Projection must be in same general direction
@@ -90,6 +84,11 @@ public class Rectangle implements Shape {
         float Q2norm = Q2.norm();
         float S2norm = S2.norm();
         if (0 < Q1norm && Q1norm < S1norm && 0 < Q2norm && Q2norm < S2norm) {
+            // Make sure normal is in reverse direction of ray
+            if (D.dotProduct(N) > 0) {
+                N = N.mul(-1);
+            }
+
             return Optional.of(new Intersection(a, P, N, material));
         } else {
             return Optional.empty();
